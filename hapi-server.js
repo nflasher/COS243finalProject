@@ -15,6 +15,7 @@ objection.Model.knex(knex);
 
 // Models
 const Account = require("./models/Account");
+const DB = require("./models/DB");
 
 // Hapi
 const Joi = require("@hapi/joi"); // Input validation
@@ -162,6 +163,52 @@ async function init() {
         }
       },
     },
+      //UPDATE OR ADD VEHICLE ON ADMIN PAGE
+    {
+      method: "PUT",
+      path: "/admin/addUpdateVehicle",
+      config: {
+        description: "Add or update vehicle",
+        validate: {
+          payload: Joi.object({
+            make: Joi.string().required(),
+            model: Joi.string().required(),
+            color: Joi.string().required(),
+            capacity: Joi.integer().required(),
+            mpg: Joi.float().required(),
+            licenseState: Joi.string().required(),
+            licenseNumber: Joi.string().required(),
+            vehicleTypeId: Joi.integer().required(),
+          }),
+        },
+      },
+      handler: async (request, h) => {
+        const vehicleChange = await DB.Vehicle.query().put({
+          make: request.payload.make,
+          model: request.payload.model,
+          color: request.payload.color,
+          capacity: request.payload.capacity,
+          mpg: request.payload.mpg,
+          licenseState: request.payload.licenseState,
+          licenseNumber: request.payload.licenseNumber,
+          vehicleTypeId: request.payload.vehicleTypeId,
+        });
+
+        if (vehicleChange) {
+          return {
+            ok: true,
+            msge: `Created or updated vehicle '${request.payload.licenseNumber}'`,
+          };
+        } else {
+          return {
+            ok: false,
+            msge: `Couldn't create or update vehicle '${request.payload.licenseNumber}'`,
+          };
+        }
+
+      },
+
+    }
   ]);
 
   // Start the server.
