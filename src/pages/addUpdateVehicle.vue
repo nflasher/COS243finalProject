@@ -49,6 +49,23 @@
                     label="vehicleTypeId"
             >
             </v-text-field>
+<!--
+            <label for="basic-dropdown">Basic dropdown: </label>
+            <select name="basic-dropdown" v-model="vehicleTypeId">
+                <option>Apple</option>
+                <option>Banana</option>
+                <option>Blueberry</option>
+                <option>Kiwi</option>
+                <option>Pear</option>
+                <option>Pineapple</option>
+                <option>Watermelon</option>
+            </select>
+
+<v-spacer>
+
+</v-spacer>
+-->
+
             <v-btn v-bind:disabled="!valid" v-on:click="addVehicle"
             >add vehicle
             </v-btn>

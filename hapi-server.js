@@ -15,7 +15,7 @@ objection.Model.knex(knex);
 
 // Models
 const Account = require("./models/Account");
-const DB = require("./models/DB");
+const Vehicle = require("./models/Vehicle");
 
 // Hapi
 const Joi = require("@hapi/joi"); // Input validation
@@ -183,7 +183,7 @@ async function init() {
         },
       },
       handler: async (request, h) => {
-        const vehicleChange = await DB.Vehicle.query().update({
+        const vehicleChange = await Vehicle.query().update({
           make: request.payload.make,
           model: request.payload.model,
           color: request.payload.color,

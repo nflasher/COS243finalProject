@@ -8,7 +8,7 @@ class Vehicle extends Model {
         return {
             authorization: {
                 relation: Model.HasManyRelation,
-                modelClass: Authorization,
+                modelClass: __dirname + "/Authorization",
                 join: {
                     from: 'Vehicle.id',
                     to: 'Authorization.vehicleId'
@@ -16,7 +16,7 @@ class Vehicle extends Model {
             },
             ride: {
                 relation: Model.HasManyRelation,
-                modelClass: Ride,
+                modelClass: __dirname + "/Ride",
                 join: {
                     from: 'Vehicle.id',
                     to: 'Ride.vehicleId'}
@@ -24,7 +24,7 @@ class Vehicle extends Model {
 
             vehicle_type: {
                 relation: Model.BelongsToOneRelation,
-                modelClass: Vehicle_Type,
+                modelClass: __dirname + "/Vehicle_Type",
                 join: {
                     from: 'Vehicle.vehicleTypeId',
                     to: ' Vehicle Type.id'}
