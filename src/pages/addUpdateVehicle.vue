@@ -90,7 +90,7 @@
         methods: {
             addVehicle() {
                 this.$axios
-                    .put("/addUpdateVehicle", {
+                    .put("/admin/addUpdateVehicle", {
                         make: this.make,
                         model: this.model,
                         color: this.color,

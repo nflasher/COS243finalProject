@@ -183,7 +183,7 @@ async function init() {
         },
       },
       handler: async (request, h) => {
-        const vehicleChange = await DB.Vehicle.query().put({
+        const vehicleChange = await DB.Vehicle.query().update({
           make: request.payload.make,
           model: request.payload.model,
           color: request.payload.color,
