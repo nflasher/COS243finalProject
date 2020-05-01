@@ -174,11 +174,11 @@ async function init() {
             make: Joi.string().required(),
             model: Joi.string().required(),
             color: Joi.string().required(),
-            capacity: Joi.integer().required(),
-            mpg: Joi.float().required(),
+            capacity: Joi.number().required(),
+            mpg: Joi.number().integer().required(),
             licenseState: Joi.string().required(),
             licenseNumber: Joi.string().required(),
-            vehicleTypeId: Joi.integer().required(),
+            vehicleTypeId: Joi.number().required(),
           }),
         },
       },
@@ -208,7 +208,7 @@ async function init() {
 
       },
 
-    }
+    },
   ]);
 
   // Start the server.

@@ -103,7 +103,10 @@
                     .then((result) => {
                         this.showSnackbar(result.data.msge);
                         if (result.data.ok) {
-                            this.showDialog("Success", result.data.msge);
+                            this.showSnackbar("Success", result.data.msge);
+                        }
+                        else{
+                            this.showSnackbar("Failure", result.data.msge);
                         }
                     })
                     .catch((err) => this.showSnackbar(err));
