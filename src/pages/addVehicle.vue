@@ -52,10 +52,7 @@
             </v-text-field>
             -->
 
-            <label for="basic-dropdown" >Basic dropdown: </label>
-            <select name="basic-dropdown" v-model="vehicleTypeId" >
-                <option>Apple, salad</option>
-            </select>
+            <v-select label="type" :options="vehicleTypes"></v-select>
 
 
 
@@ -77,6 +74,7 @@
 
 <script>
     export default {
+
         data() {
             return {
                 valid: false, // Are all the fields in the form valid?
@@ -89,7 +87,7 @@
                 licenseState: "",
                 licenseNumber: "",
 
-                vehicleTypes: [],
+                vehicleTypes: {},
 
                 snackbar: {
                     show: false,
@@ -109,7 +107,7 @@
                 .get("/getVehicleTypeId")
                 .then(result => {
                     this.vehicleTypes = result.data.map(vehicleTypes => ({
-                        type: vehicleTypes.type,
+                        type: vehicleTypes,
                     }));
                 });
         },

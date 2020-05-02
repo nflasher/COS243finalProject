@@ -219,7 +219,7 @@ async function init() {
         description: "grabs vehicleTypes",
       },
       handler: (request, h) => {
-        return VehicleType.query().select("type");
+        return VehicleType.query();
       },
     }
   ]);
