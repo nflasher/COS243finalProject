@@ -168,7 +168,7 @@ async function init() {
       //UPDATE OR ADD VEHICLE ON ADMIN PAGE
     {
       method: "POST",
-      path: "/admin/addVehicle",
+      path: "/addVehicle",
       config: {
         description: "Add vehicle",
         validate: {
@@ -211,9 +211,10 @@ async function init() {
       },
 
     },
+      //GET VEHICLE TYPEID
     {
       method: "GET",
-      path: "/admin/getVehicleTypeId",
+      path: "/getVehicleTypeId",
       config: {
         description: "grabs vehicleTypes",
       },

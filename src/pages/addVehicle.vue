@@ -1,7 +1,6 @@
 <template>
     <div>
         <header>Add a vehicle here.</header>
-
         <v-form v-model="valid">
             <v-text-field
                     v-model="make"
@@ -55,14 +54,10 @@
 
             <label for="basic-dropdown" >Basic dropdown: </label>
             <select name="basic-dropdown" v-model="vehicleTypeId" >
-                <option>Apple</option>
-                <option>Banana</option>
-                <option>Blueberry</option>
-                <option>Kiwi</option>
-                <option>Pear</option>
-                <option>Pineapple</option>
-                <option>Watermelon</option>
+                <option>Apple, salad</option>
             </select>
+
+
 
 <v-spacer>
 
@@ -93,7 +88,8 @@
                 mpg: "",
                 licenseState: "",
                 licenseNumber: "",
-                vehicleTypeId: "",
+
+                vehicleTypes: [],
 
                 snackbar: {
                     show: false,
@@ -105,12 +101,23 @@
                 },
         };
 
+
+        },
+
+        mounted: function() {
+            this.$axios
+                .get("/getVehicleTypeId")
+                .then(result => {
+                    this.vehicleTypes = result.data.map(vehicleTypes => ({
+                        type: vehicleTypes.type,
+                    }));
+                });
         },
 
         methods: {
             addVehicle() {
                 this.$axios
-                    .post("/admin/addVehicle", {
+                    .post("addVehicle", {
                         make: this.make,
                         model: this.model,
                         color: this.color,
@@ -132,20 +139,14 @@
                     .catch((err) => this.showSnackbar(err));
             },
 
-            getVehicleType(){
-                this.$axios
-                    .get("/admin/getVehicleTypeId")
-                    .then((result) => {
-                        vehicleTypeId=result;
-                    }
-            },
+
 
             showSnackbar(msge) {
                 this.snackbar.msge = msge;
                 this.snackbar.show = true;
             },
         },
-    },
+    }
 </script>
 
 <style scoped>
