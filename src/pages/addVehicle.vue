@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header>Add or update a vehicle here.</header>
+        <header>Add a vehicle here.</header>
 
         <v-form v-model="valid">
             <v-text-field
@@ -107,7 +107,7 @@
         methods: {
             addVehicle() {
                 this.$axios
-                    .put("/admin/addUpdateVehicle", {
+                    .post("/admin/addVehicle", {
                         make: this.make,
                         model: this.model,
                         color: this.color,

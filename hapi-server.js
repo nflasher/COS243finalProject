@@ -165,10 +165,10 @@ async function init() {
     },
       //UPDATE OR ADD VEHICLE ON ADMIN PAGE
     {
-      method: "PUT",
-      path: "/admin/addUpdateVehicle",
+      method: "POST",
+      path: "/admin/addVehicle",
       config: {
-        description: "Add or update vehicle",
+        description: "Add vehicle",
         validate: {
           payload: Joi.object({
             make: Joi.string().required(),
@@ -183,7 +183,7 @@ async function init() {
         },
       },
       handler: async (request, h) => {
-        const vehicleChange = await Vehicle.query().update({
+        const addVehicle = await Vehicle.query().insert({
           make: request.payload.make,
           model: request.payload.model,
           color: request.payload.color,
@@ -194,15 +194,15 @@ async function init() {
           vehicleTypeId: request.payload.vehicleTypeId,
         });
 
-        if (vehicleChange) {
+        if (addVehicle) {
           return {
             ok: true,
-            msge: `Created or updated vehicle '${request.payload.licenseNumber}'`,
+            msge: `Created vehicle '${request.payload.licenseNumber}'`,
           };
         } else {
           return {
             ok: false,
-            msge: `Couldn't create or update vehicle '${request.payload.licenseNumber}'`,
+            msge: `Couldn't create vehicle '${request.payload.licenseNumber}'`,
           };
         }
 

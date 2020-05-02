@@ -3,8 +3,8 @@
         <header>
             Admin Page
         </header>
-        <v-btn text v-bind:to="{ name: 'addUpdateVehicle' }">
-            Add or Update a Vehicle
+        <v-btn text v-bind:to="{ name: 'addVehicle' }">
+            Add Vehicle
         </v-btn>
     </div>
 </template>
