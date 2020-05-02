@@ -43,15 +43,18 @@
                     label="licenseNumber"
             >
             </v-text-field>
+            <!--
+
             <v-text-field
                     v-model="vehicleTypeId"
                     v-bind:rules="rules.required"
                     label="vehicleTypeId"
             >
             </v-text-field>
-<!--
-            <label for="basic-dropdown">Basic dropdown: </label>
-            <select name="basic-dropdown" v-model="vehicleTypeId">
+            -->
+
+            <label for="basic-dropdown" >Basic dropdown: </label>
+            <select name="basic-dropdown" v-model="vehicleTypeId" >
                 <option>Apple</option>
                 <option>Banana</option>
                 <option>Blueberry</option>
@@ -64,7 +67,7 @@
 <v-spacer>
 
 </v-spacer>
--->
+
 
             <v-btn v-bind:disabled="!valid" v-on:click="addVehicle"
             >add vehicle
@@ -115,7 +118,7 @@
                         mpg: this.mpg,
                         licenseState: this.licenseState,
                         licenseNumber: this.licenseNumber,
-                        vehicleTypeId: this.vehicleTypeId,
+                    //    vehicleTypeId: this.vehicleTypeId,
                     })
                     .then((result) => {
                         this.showSnackbar(result.data.msge);
@@ -129,12 +132,20 @@
                     .catch((err) => this.showSnackbar(err));
             },
 
+            getVehicleType(){
+                this.$axios
+                    .get("/admin/getVehicleTypeId")
+                    .then((result) => {
+                        vehicleTypeId=result;
+                    }
+            },
+
             showSnackbar(msge) {
                 this.snackbar.msge = msge;
                 this.snackbar.show = true;
             },
         },
-    }
+    },
 </script>
 
 <style scoped>

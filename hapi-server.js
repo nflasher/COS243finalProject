@@ -16,6 +16,8 @@ objection.Model.knex(knex);
 // Models
 const Account = require("./models/Account");
 const Vehicle = require("./models/vehicle");
+const VehicleType = require("./models/vehicleType");
+
 
 // Hapi
 const Joi = require("@hapi/joi"); // Input validation
@@ -178,7 +180,7 @@ async function init() {
             mpg: Joi.number().integer().required(),
             licenseState: Joi.string().required(),
             licenseNumber: Joi.string().required(),
-            vehicleTypeId: Joi.number().required(),
+      //      vehicleTypeId: Joi.number().required(),
           }),
         },
       },
@@ -191,7 +193,7 @@ async function init() {
           mpg: request.payload.mpg,
           licenseState: request.payload.licenseState,
           licenseNumber: request.payload.licenseNumber,
-          vehicleTypeId: request.payload.vehicleTypeId,
+     //     vehicleTypeId: request.payload.vehicleTypeId,
         });
 
         if (addVehicle) {
@@ -209,6 +211,16 @@ async function init() {
       },
 
     },
+    {
+      method: "GET",
+      path: "/admin/getVehicleTypeId",
+      config: {
+        description: "grabs vehicleTypes",
+      },
+      handler: (request, h) => {
+        return VehicleType.query().select("type");
+      },
+    }
   ]);
 
   // Start the server.
