@@ -1,17 +1,17 @@
 const { Model } = require("objection");
 
-class Vehicle_Type extends Model { //DONE
+class VehicleType extends Model { //DONE
     static get tableName() {
-        return 'Vehicle Type';
+        return 'vehicleType';
     }
     static get relationMappings() {
         return {
             vehicle: {
                 relation: Model.HasManyRelation,
-                modelClass: Vehicle,
+                modelClass: __dirname + "/vehicle",
                 join: {
-                    from: 'Vehicle Type.id',
-                    to: 'Vehicle.vehicleTypeId'
+                    from: 'vehicleType.id',
+                    to: 'vehicle.vehicleTypeId'
                 }
             }
 
@@ -21,4 +21,4 @@ class Vehicle_Type extends Model { //DONE
     }
 }
 
-module.exports = Vehicle_Type;
+module.exports = VehicleType;

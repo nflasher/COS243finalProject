@@ -15,7 +15,7 @@ objection.Model.knex(knex);
 
 // Models
 const Account = require("./models/Account");
-const Vehicle = require("./models/Vehicle");
+const Vehicle = require("./models/vehicle");
 
 // Hapi
 const Joi = require("@hapi/joi"); // Input validation

@@ -2,16 +2,16 @@ const { Model } = require("objection");
 
 class Passenger extends Model { //DONE
     static get tableName() {
-        return 'Passenger';
+        return 'passenger';
     }
     static get relationMappings() {
         return {
             passengers: {
                 relation: Model.HasManyRelation,
-                modelClass: Passengers,
+                modelClass: __dirname + "/passengers",
                 join: {
-                    from: 'Passenger.id',
-                    to: 'Passengers.passengerId'  }
+                    from: 'passenger.id',
+                    to: 'passengers.passengerId'  }
             }
 
         }

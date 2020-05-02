@@ -2,25 +2,25 @@ const { Model } = require("objection");
 
 class Drivers extends Model { //DONE
     static get tableName() {
-        return 'Drivers';
+        return 'drivers';
     }
     static get relationMappings() {
         return {
             driver: {
                 relation: Model.BelongsToOneRelation,
-                modelClass: Driver,
+                modelClass: __dirname + "/driver",
                 join: {
-                    from: 'Drivers.driverId',
-                    to: 'Driver.id'  }
+                    from: 'drivers.driverId',
+                    to: 'driver.id'  }
 
             },
 
             ride: {
                 relation: Model.BelongsToOneRelation,
-                modelClass: Ride,
+                modelClass: __dirname + "/ride",
                 join: {
-                    from: 'Drivers.rideId',
-                    to: 'Ride.id'  }
+                    from: 'drivers.rideId',
+                    to: 'ride.id'  }
             }
 
         }

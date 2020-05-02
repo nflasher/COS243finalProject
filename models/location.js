@@ -2,32 +2,32 @@ const { Model } = require("objection");
 
 class Location extends Model { //DONE
     static get tableName() {
-        return 'Location';
+        return 'location';
     }
     static get relationMapping(){
         return {
             state: {
                 relation: Model.BelongsToOneRelation,
-                modelClass: State,
+                modelClass: __dirname + "/state",
                 join: {
-                    from: 'Location.state',
-                    to: 'State.abbreviation'}
+                    from: 'location.state',
+                    to: 'state.abbreviation'}
             },
 
             toRide: {
                 relation: Model.HasManyRelation,
-                modelClass: Ride,
+                modelClass: __dirname + "/ride",
                 join: {
-                    from: 'Location.id',
-                    to: 'Ride.toLocationId'}
+                    from: 'location.id',
+                    to: 'ride.toLocationId'}
             },
 
             fromRide: {
                 relation: Model.HasManyRelation,
-                modelClass: Ride,
+                modelClass: __dirname + "/ride",
                 join: {
-                    from: 'Location.id',
-                    to: 'Ride.fromLocationId'}
+                    from: 'location.id',
+                    to: 'ride.fromLocationId'}
             },
 
         }

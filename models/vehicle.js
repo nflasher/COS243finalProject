@@ -2,32 +2,32 @@ const { Model } = require("objection");
 
 class Vehicle extends Model {
     static get tableName() {
-        return 'Vehicle';
+        return 'vehicle';
     }
     static get relationMappings() {
         return {
             authorization: {
                 relation: Model.HasManyRelation,
-                modelClass: __dirname + "/Authorization",
+                modelClass: __dirname + "/authorization",
                 join: {
-                    from: 'Vehicle.id',
-                    to: 'Authorization.vehicleId'
+                    from: 'vehicle.id',
+                    to: 'authorization.vehicleId'
                 }
             },
             ride: {
                 relation: Model.HasManyRelation,
                 modelClass: __dirname + "/Ride",
                 join: {
-                    from: 'Vehicle.id',
-                    to: 'Ride.vehicleId'}
+                    from: 'vehicle.id',
+                    to: 'ride.vehicleId'}
             },
 
-            vehicle_type: {
+            vehicleType: {
                 relation: Model.BelongsToOneRelation,
-                modelClass: __dirname + "/Vehicle_Type",
+                modelClass: __dirname + "/vehicleType",
                 join: {
-                    from: 'Vehicle.vehicleTypeId',
-                    to: ' Vehicle Type.id'}
+                    from: 'vehicle.vehicleTypeId',
+                    to: ' vehicleType.id'}
             },
         }
     }
