@@ -16,7 +16,7 @@ class Vehicle extends Model {
             },
             ride: {
                 relation: Model.HasManyRelation,
-                modelClass: __dirname + "/Ride",
+                modelClass: __dirname + "/ride",
                 join: {
                     from: 'vehicle.id',
                     to: 'ride.vehicleId'}
