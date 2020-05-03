@@ -288,6 +288,40 @@ async function init() {
 
       },
 
+    },
+
+    //Posts to vehicletype!
+    {
+      method: "POST",
+      path: "/vehicleType",
+      config: {
+        description: "adds vehicle type",
+        validate: {
+          payload: Joi.object({
+            type: Joi.string().required(),
+          }),
+        },
+      },
+      handler: async (request, h) => {
+
+        const addVehicleTypeQuery = await VehicleType.query().insert({
+              type: request.payload.type,
+            });
+
+        if (addVehicleTypeQuery) {
+          return {
+            ok: true,
+            msge: `Updated vehicle with license plate number of: '${request.payload.type}'`,
+          };
+        } else {
+          return {
+            ok: false,
+            msge: `Failed to update vehicle with license plate number: '${request.payload.type}'`,
+          };
+        }
+
+      },
+
     }
 
 

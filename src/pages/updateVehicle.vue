@@ -22,14 +22,16 @@
             >
             </v-text-field>
             <v-text-field
+                    type="number"
                     v-model="capacity"
-                    v-bind:rules="rules.numbersOnly"
+                    v-bind:rules="rules.required"
                     label="capacity"
             >
             </v-text-field>
             <v-text-field
+                    type="number"
                     v-model="mpg"
-                    v-bind:rules="rules.numbersOnly"
+                    v-bind:rules="rules.required"
                     label="mpg"
             >
             </v-text-field>
