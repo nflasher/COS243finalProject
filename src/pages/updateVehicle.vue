@@ -1,7 +1,10 @@
 <template>
     <div>
-        <header>Add a vehicle here.</header>
+        <header>Update a vehicle here.</header>
         <v-form v-model="valid">
+
+            <v-select label="Select vehicle id" :items="vehicleIds" v-model="id"></v-select>
+
             <v-text-field
                     v-model="make"
                     v-bind:rules="rules.required"
@@ -20,13 +23,13 @@
             </v-text-field>
             <v-text-field
                     v-model="capacity"
-                    v-bind:rules="rules.required"
+                    v-bind:rules="rules.numbersOnly"
                     label="capacity"
             >
             </v-text-field>
             <v-text-field
                     v-model="mpg"
-                    v-bind:rules="rules.required"
+                    v-bind:rules="rules.numbersOnly"
                     label="mpg"
             >
             </v-text-field>
@@ -48,13 +51,13 @@
 
 
 
-<v-spacer>
+            <v-spacer>
 
-</v-spacer>
+            </v-spacer>
 
 
-            <v-btn v-bind:disabled="!valid" v-on:click="addVehicle"
-            >add vehicle
+            <v-btn v-bind:disabled="!valid" v-on:click="updateVehicle"
+            >update vehicle
             </v-btn>
         </v-form>
         <v-snackbar v-model="snackbar.show">
@@ -66,11 +69,11 @@
 
 <script>
     export default {
-
         data() {
             return {
                 valid: false, // Are all the fields in the form valid?
 
+                id: "",
                 make: "",
                 model: "",
                 color: "",
@@ -81,6 +84,7 @@
                 vehicleTypeId: "",
 
                 vehicleTypes: [],
+                vehicleIds: [],
 
                 snackbar: {
                     show: false,
@@ -90,7 +94,10 @@
                 rules: {
                     required: [(val) => val.length > 0 || "Required"],
                 },
-        };
+                numbersOnly:[
+                    (val) => /^[1-9]\d*(\.\d+)?$/.test(val) || 'Numerical values only'
+                ]
+            };
 
 
         },
@@ -106,10 +113,24 @@
                 });
         },
 
+        created: function() {
+            this.$axios
+                .get("/vehicleId")
+                .then(result => {
+                    this.vehicleIds = result.data.map(vehicleId => ({
+                        text: vehicleId.id,
+                        value: vehicleId.id
+                    }));
+                });
+        },
+
+
+
         methods: {
-            addVehicle() {
+            updateVehicle() {
                 this.$axios
-                    .post("/vehicle", {
+                    .patch("/vehicle", {
+                        id: this.id,
                         make: this.make,
                         model: this.model,
                         color: this.color,

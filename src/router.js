@@ -8,6 +8,7 @@ import About from "./pages/About.vue";
 import Accounts from "./pages/Accounts.vue";
 import Admin from "./pages/Admin.vue";
 import addVehicle from "./pages/addVehicle";
+import updateVehicle from "./pages/updateVehicle";
 
 Vue.use(Router);
 
@@ -21,6 +22,7 @@ export default new Router({
     { name: "about-us", path: "/about-us", component: About },
     { name: "accounts", path: "/accounts", component: Accounts },
     { name: "admin", path: "/admin", component: Admin },
-    { name: "addVehicle", path: "/admin/addVehicle", component: addVehicle }
+    { name: "addVehicle", path: "/admin/addVehicle", component: addVehicle },
+    { name: "updateVehicle", path: "/admin/updateVehicle", component: updateVehicle }
   ]
 });

@@ -165,10 +165,10 @@ async function init() {
         }
       },
     },
-      //UPDATE OR ADD VEHICLE ON ADMIN PAGE
+      //ADD VEHICLE ON ADMIN PAGE
     {
       method: "POST",
-      path: "/addVehicle",
+      path: "/vehicle",
       config: {
         description: "Add vehicle",
         validate: {
@@ -180,7 +180,7 @@ async function init() {
             mpg: Joi.number().integer().required(),
             licenseState: Joi.string().required(),
             licenseNumber: Joi.string().required(),
-      //      vehicleTypeId: Joi.number().required(),
+            vehicleTypeId: Joi.number().required(),
           }),
         },
       },
@@ -193,7 +193,7 @@ async function init() {
           mpg: request.payload.mpg,
           licenseState: request.payload.licenseState,
           licenseNumber: request.payload.licenseNumber,
-     //     vehicleTypeId: request.payload.vehicleTypeId,
+          vehicleTypeId: request.payload.vehicleTypeId,
         });
 
         if (addVehicle) {
@@ -214,14 +214,84 @@ async function init() {
       //GET VEHICLE TYPEID
     {
       method: "GET",
-      path: "/getVehicleTypeId",
+      path: "/vehicleType",
       config: {
         description: "grabs vehicleTypes",
       },
       handler: (request, h) => {
         return VehicleType.query();
       },
+    },
+      //GET VEHICLE ID
+    {
+      method: "GET",
+      path: "/vehicleId",
+      config: {
+        description: "grabs vehicle ids",
+      },
+      handler: (request, h) => {
+        return Vehicle.query()
+        .select('id')
+      },
+    },
+
+           //UPDATE VEHICLE ROUTE
+    {
+      method: "PATCH",
+      path: "/vehicle",
+      config: {
+        description: "Update vehicle",
+        validate: {
+          payload: Joi.object({
+            id: Joi.number().required(),
+            make: Joi.string().required(),
+            model: Joi.string().required(),
+            color: Joi.string().required(),
+            capacity: Joi.number().required(),
+            mpg: Joi.number().integer().required(),
+            licenseState: Joi.string().required(),
+            licenseNumber: Joi.string().required(),
+            vehicleTypeId: Joi.number().required(),
+          }),
+        },
+      },
+      handler: async (request, h) => {
+
+        const updatedVehicle = await Vehicle.query()
+            .where("id", request.payload.id)
+            .first();
+
+        const updateVehicleQuery = await Vehicle.query()
+            .findById(updatedVehicle.id)
+            .patch({
+              make: request.payload.make,
+              model: request.payload.model,
+              color: request.payload.color,
+              capacity: request.payload.capacity,
+              mpg: request.payload.mpg,
+              licenseState: request.payload.licenseState,
+              licenseNumber: request.payload.licenseNumber,
+              vehicleTypeId: request.payload.vehicleTypeId,
+        });
+
+        if (updateVehicleQuery) {
+          return {
+            ok: true,
+            msge: `Updated vehicle with license plate number of: '${request.payload.licenseNumber}'`,
+          };
+        } else {
+          return {
+            ok: false,
+            msge: `Failed to update vehicle with license plate number: '${request.payload.licenseNumber}'`,
+          };
+        }
+
+      },
+
     }
+
+
+
   ]);
 
   // Start the server.
