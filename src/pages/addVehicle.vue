@@ -20,13 +20,13 @@
             </v-text-field>
             <v-text-field
                     v-model="capacity"
-                    v-bind:rules="rules.required"
+                    v-bind:rules="rules.numbersOnly"
                     label="capacity"
             >
             </v-text-field>
             <v-text-field
                     v-model="mpg"
-                    v-bind:rules="rules.required"
+                    v-bind:rules="rules.numbersOnly"
                     label="mpg"
             >
             </v-text-field>
@@ -88,7 +88,14 @@
                 },
 
                 rules: {
-                    required: [(val) => val.length > 0 || "Required"],
+                    required: [
+                        (val) => val.length > 0 || "Required",
+                    ],
+                    numbersOnly: [
+                        (val) => val.length > 0 || "Required",
+                        (val) => /^[1-9]\d*(\.\d+)?$/.test(val) || "Numerical values only"
+                    ],
+
                 },
         };
 
