@@ -12,6 +12,9 @@
         <v-btn text v-bind:to="{ name: 'addVehicleType' }">
             Add Vehicle Type
         </v-btn>
+        <v-btn text v-bind:to="{ name: 'addRide' }">
+            Add Ride
+        </v-btn>
     </div>
 
 </template>

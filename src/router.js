@@ -10,6 +10,7 @@ import Admin from "./pages/Admin.vue";
 import addVehicle from "./pages/addVehicle";
 import updateVehicle from "./pages/updateVehicle"
 import addVehicleType from "./pages/addVehicleType";
+import addRide from "./pages/addRide";
 
 
 Vue.use(Router);
@@ -27,6 +28,7 @@ export default new Router({
     { name: "addVehicle", path: "/admin/addVehicle", component: addVehicle },
     { name: "updateVehicle", path: "/admin/updateVehicle", component: updateVehicle },
     { name: "addVehicleType", path: "/admin/addVehicleType", component: addVehicleType },
+    { name: "addRide", path: "/admin/addRide", component: addRide }
 
   ]
 });

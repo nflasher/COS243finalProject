@@ -17,6 +17,8 @@ objection.Model.knex(knex);
 const Account = require("./models/Account");
 const Vehicle = require("./models/vehicle");
 const VehicleType = require("./models/vehicleType");
+const Ride = require("./models/ride");
+const Location = require("./models/location");
 
 
 // Hapi
@@ -231,7 +233,7 @@ async function init() {
       },
       handler: (request, h) => {
         return Vehicle.query()
-        .select('id')
+        .select('id');
       },
     },
 
@@ -290,7 +292,7 @@ async function init() {
 
     },
 
-    //Posts to vehicletype!
+    // Posts/adds to vehicletype!
     {
       method: "POST",
       path: "/vehicleType",
@@ -311,17 +313,76 @@ async function init() {
         if (addVehicleTypeQuery) {
           return {
             ok: true,
-            msge: `Updated vehicle with license plate number of: '${request.payload.type}'`,
+            msge: `Created vehicle type: '${request.payload.type}'`,
           };
         } else {
           return {
             ok: false,
-            msge: `Failed to update vehicle with license plate number: '${request.payload.type}'`,
+            msge: `Failed to create vehicle type: '${request.payload.type}'`,
           };
         }
 
       },
 
+    },
+
+
+    {
+      method: "POST",
+      path: "/ride",
+      config: {
+        description: "Add ride",
+        validate: {
+          payload: Joi.object({
+            date: Joi.date().required(),
+            time: Joi.string().required(),
+            distance: Joi.number().required(),
+            fuelPrice: Joi.number().required(),
+            fee: Joi.number().required(),
+            vehicleId: Joi.number().required(),
+            fromLocationId: Joi.number().required(),
+            toLocationId: Joi.number().required(),
+          }),
+        },
+      },
+      handler: async (request, h) => {
+        const addRide = await Ride.query().insert({
+          date: request.payload.date,
+          time: request.payload.time,
+          distance: request.payload.distance,
+          fuelPrice: request.payload.fuelPrice,
+          fee: request.payload.fee,
+          vehicleId: request.payload.vehicleId,
+          fromLocationId: request.payload.fromLocationId,
+          toLocationId: request.payload.toLocationId,
+        });
+
+        if (addRide) {
+          return {
+            ok: true,
+            msge: `Created ride `,
+          };
+        } else {
+          return {
+            ok: false,
+            msge: `Couldn't create ride `,
+          };
+        }
+
+      },
+
+    },
+
+    {
+      method: "GET",
+      path: "/location",
+      config: {
+        description: "Grabs location id's",
+      },
+      handler: (request, h) => {
+        return Location.query()
+            .select('id');
+      },
     }
 
 
