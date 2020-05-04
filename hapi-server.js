@@ -20,6 +20,10 @@ const Vehicle = require("./models/vehicle");
 const VehicleType = require("./models/vehicleType");
 const Ride = require("./models/ride");
 const Location = require("./models/location");
+const Driver = require("./models/driver");
+const Authorization = require("./models/authorization");
+
+
 
 
 // Hapi
@@ -457,7 +461,72 @@ async function init() {
 
       },
 
-    }
+    },
+    //get vehicles
+
+    {
+      method: "GET",
+      path: "/vehicle",
+      config: {
+        description: "Grabs vehicle id's",
+      },
+      handler: (request, h) => {
+        return Vehicle.query()
+            .select('id')
+            .select('licenseNumber');
+
+      },
+    },
+
+    //Get driver
+    {
+      method: "GET",
+      path: "/driver",
+      config: {
+        description: "Grabs driver id's",
+      },
+      handler: (request, h) => {
+        return Driver.query()
+            .select('id')
+            .select('firstName');
+
+      },
+    },
+
+    //posts authorization
+    {
+      method: "POST",
+      path: "/authorization",
+      config: {
+        description: "authorizes driver",
+        validate: {
+          payload: Joi.object({
+            driverId: Joi.number().required(),
+            vehicleId: Joi.number().required()
+          }),
+        },
+      },
+      handler: async (request, h) => {
+        const authorize = await Authorization.query().insert({
+          driverId: request.payload.driverId,
+          vehicleId: request.payload.vehicleId,
+        });
+
+        if (authorize) {
+          return {
+            ok: true,
+            msge: `Created ride `,
+          };
+        } else {
+          return {
+            ok: false,
+            msge: `Couldn't create ride `,
+          };
+        }
+
+      },
+
+    },
 
 
 

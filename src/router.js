@@ -12,6 +12,8 @@ import updateVehicle from "./pages/updateVehicle"
 import addVehicleType from "./pages/addVehicleType";
 import addRide from "./pages/addRide";
 import updateRide from "./pages/updateRide";
+import authorizeDriver from "./pages/authorizeDriver";
+
 
 
 Vue.use(Router);
@@ -31,6 +33,8 @@ export default new Router({
     { name: "addVehicleType", path: "/admin/addVehicleType", component: addVehicleType },
     { name: "addRide", path: "/admin/addRide", component: addRide },
     { name: "updateRide", path: "/admin/updateRide", component: updateRide },
+    { name: "authorizeDriver", path: "/admin/authorizeDriver", component: authorizeDriver },
+
 
   ]
 });

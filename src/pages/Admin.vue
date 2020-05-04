@@ -18,6 +18,9 @@
         <v-btn text v-bind:to="{ name: 'updateRide' }">
             Update Ride
         </v-btn>
+        <v-btn text v-bind:to="{ name: 'authorizeDriver' }">
+            Authorize Driver
+        </v-btn>
     </div>
 
 </template>
