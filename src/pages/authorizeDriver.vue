@@ -9,7 +9,7 @@
             <v-spacer></v-spacer>
 
             <v-btn v-bind:disabled="!valid" v-on:click="authorizeDriver"
-            >add vehicle
+            >Authorize driver
             </v-btn>
         </v-form>
         <v-snackbar v-model="snackbar.show">

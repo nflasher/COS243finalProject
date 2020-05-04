@@ -21,6 +21,9 @@
         <v-btn text v-bind:to="{ name: 'authorizeDriver' }">
             Authorize Driver
         </v-btn>
+        <v-btn text v-bind:to="{ name: 'getReport' }">
+            Get report of all rides with their passengers and drivers
+        </v-btn>
     </div>
 
 </template>

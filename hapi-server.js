@@ -468,7 +468,7 @@ async function init() {
       method: "GET",
       path: "/vehicle",
       config: {
-        description: "Grabs vehicle id's",
+        description: "Grabs vehicle id's and license numbers",
       },
       handler: (request, h) => {
         return Vehicle.query()
@@ -527,7 +527,19 @@ async function init() {
       },
 
     },
+//GET RIDE REPORT
+    {
+      method: "GET",
+      path: "/getReport",
+      config: {
+        description: "Get report of rides",
+      },
+      handler: async (request, h) => {
+        return Ride.query();
 
+      },
+
+    }
 
 
   ]);

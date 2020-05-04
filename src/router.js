@@ -13,6 +13,7 @@ import addVehicleType from "./pages/addVehicleType";
 import addRide from "./pages/addRide";
 import updateRide from "./pages/updateRide";
 import authorizeDriver from "./pages/authorizeDriver";
+import getReport from "./pages/getReport";
 
 
 
@@ -34,6 +35,7 @@ export default new Router({
     { name: "addRide", path: "/admin/addRide", component: addRide },
     { name: "updateRide", path: "/admin/updateRide", component: updateRide },
     { name: "authorizeDriver", path: "/admin/authorizeDriver", component: authorizeDriver },
+    { name: "getReport", path: "/admin/getReport", component: getReport },
 
 
   ]

@@ -1,0 +1,92 @@
+<template>
+    <v-container>
+        <div>
+            <h4 class="display-1">Rides</h4>
+
+            <v-data-table
+                    class="elevation-1"
+                    v-bind:headers="headers"
+                    v-bind:items="rideInfo"
+            >
+                <template v-slot:item="{ item }">
+                    <tr v-bind:class="itemClass(item)">
+                        <td>{{ item.date }}</td>
+                        <td>{{ item.time }}</td>
+                        <td>{{ item.distance }}</td>
+                        <td>{{ item.fuelPrice }}</td>
+                        <td>{{ item.fee }}</td>
+                        <td>{{ item.vehicleId }}</td>
+                        <td>{{ item.fromLocationId }}</td>
+                        <td>{{ item.toLocationId }}</td>
+
+                    </tr>
+                </template>
+            </v-data-table>
+
+            <v-snackbar v-model="snackbar.show">
+                {{ snackbar.text }}
+                <v-btn color="blue" text @click="snackbar.show = false">
+                    Close
+                </v-btn>
+            </v-snackbar>
+        </div>
+    </v-container>
+</template>
+
+<script>
+    export default {
+
+        data: function() {
+            return {
+                headers: [
+                    { text: "Date", value: "date" },
+                    { text: "Time", value: "time" },
+                    { text: "Distance", value: "distance" },
+                    { text: "Fuel Price", value: "fuelPrice" },
+                    { text: "Fee", value: "fee" },
+                    { text: "Vehicle type", value: "vehicleId" },
+                    { text: "From Location", value: "fromLocationId" },
+                    { text: "To Location", value: "toLocationId" }
+                ],
+                rideInfo: [],
+
+                snackbar: {
+                    show: false,
+                    text: ""
+                }
+            };
+        },
+
+        mounted: function() {
+            this.$axios.get("/getReport").then(response => {
+                this.rideInfo = response.data.map(rideInformation => ({
+                    id: rideInformation.id,
+                    date: rideInformation.date,
+                    time: rideInformation.time,
+                    distance: rideInformation.distance,
+                    fuelPrice: rideInformation.fuelPrice,
+                    fee: rideInformation.fee,
+                    vehicleId: rideInformation.vehicleId,
+                    fromLocationId: rideInformation.fromLocationId,
+                    toLocationId: rideInformation.toLocationId
+
+                }));
+            });
+        },
+
+        methods: {
+            // Display a snackbar message.
+            showSnackbar(text) {
+                this.snackbar.text = text;
+                this.snackbar.show = true;
+            },
+
+        }
+    };
+</script>
+
+<style>
+    .currentAccount {
+        background: lightcoral;
+    }
+</style>
