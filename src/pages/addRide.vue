@@ -3,11 +3,13 @@
         <header>Add a ride here.</header>
         <v-form v-model="valid">
             <v-text-field
+                    type="date"
                     v-model="date"
                     v-bind:rules="rules.required"
                     label="date"
             ></v-text-field>
             <v-text-field
+                    type="time"
                     v-model="time"
                     v-bind:rules="rules.required"
                     label="time"
