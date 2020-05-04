@@ -326,7 +326,7 @@ async function init() {
 
     },
 
-
+//CREATES A RIDE
     {
       method: "POST",
       path: "/ride",
@@ -373,6 +373,7 @@ async function init() {
 
     },
 
+// GETS LOCATION IDS
     {
       method: "GET",
       path: "/location",
@@ -385,6 +386,76 @@ async function init() {
             .select('address');
 
       },
+    },
+//GETS RIDE IDS
+    {
+      method: "GET",
+      path: "/rideId",
+      config: {
+        description: "Grabs ride id's",
+      },
+      handler: (request, h) => {
+        return Ride.query()
+            .select('id');
+
+      },
+    },
+
+
+    //UPDATES A RIDE
+    {
+      method: "PATCH",
+      path: "/ride",
+      config: {
+        description: "Update ride",
+        validate: {
+          payload: Joi.object({
+            id: Joi.number().required(),
+            date: Joi.date().required(),
+            time: Joi.string().required(),
+            distance: Joi.number().required(),
+            fuelPrice: Joi.number().required(),
+            fee: Joi.number().required(),
+            vehicleId: Joi.number().required(),
+            fromLocationId: Joi.number().required(),
+            toLocationId: Joi.number().required(),
+          }),
+        },
+      },
+      handler: async (request, h) => {
+
+        const updatedRide = await Ride.query()
+            .where("id", request.payload.id)
+            .first();
+
+        const updateRide = await Ride.query()
+            .findById(updatedRide.id)
+            .patch({
+              id: request.payload.id,
+              date: request.payload.date,
+              time: request.payload.time,
+              distance: request.payload.distance,
+              fuelPrice: request.payload.fuelPrice,
+              fee: request.payload.fee,
+              vehicleId: request.payload.vehicleId,
+              fromLocationId: request.payload.fromLocationId,
+              toLocationId: request.payload.toLocationId,
+        });
+
+        if (updateRide) {
+          return {
+            ok: true,
+            msge: `Updated ride with id: '${request.payload.id}'`,
+          };
+        } else {
+          return {
+            ok: false,
+            msge: `Couldn't update ride with id of: '${request.payload.id}' `,
+          };
+        }
+
+      },
+
     }
 
 

@@ -1,7 +1,11 @@
 <template>
     <div>
-        <header>Add a ride here.</header>
+        <header>Update a ride here.</header>
         <v-form v-model="valid">
+
+            <v-select label="Select ride id" :items="ids" v-model="id"></v-select>
+
+
             <v-text-field
                     type="date"
                     v-model="date"
@@ -48,8 +52,8 @@
             </v-spacer>
 
 
-            <v-btn v-bind:disabled="!valid" v-on:click="addRide"
-            >add ride
+            <v-btn v-bind:disabled="!valid" v-on:click="updateRide"
+            >update ride
             </v-btn>
         </v-form>
         <v-snackbar v-model="snackbar.show">
@@ -66,6 +70,7 @@
             return {
                 valid: false, // Are all the fields in the form valid?
 
+                id: "",
                 date: "",
                 time: "",
                 distance: "",
@@ -77,6 +82,7 @@
 
                 vehicleTypes: [],
                 Locations: [],
+                ids: [],
 
                 snackbar: {
                     show: false,
@@ -120,10 +126,22 @@
                 });
         },
 
+        beforeMount: function() {
+            this.$axios
+                .get("/rideId")
+                .then(result => {
+                    this.ids = result.data.map(rideId => ({
+                        text: rideId.id,
+                        value: rideId.id
+                    }));
+                });
+        },
+
         methods: {
-            addRide() {
+            updateRide() {
                 this.$axios
-                    .post("/ride", {
+                    .patch("/ride", {
+                        id: this.id,
                         date: this.date,
                         time: this.time,
                         distance: this.distance,
