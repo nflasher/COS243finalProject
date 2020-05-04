@@ -111,7 +111,7 @@
                 .get("/location")
                 .then(result => {
                     this.Locations = result.data.map(location => ({
-                        text: location.id,
+                        text: location.address,
                         value: location.id
                     }));
                 });

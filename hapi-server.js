@@ -381,7 +381,9 @@ async function init() {
       },
       handler: (request, h) => {
         return Location.query()
-            .select('id');
+            .select('id')
+            .select('address');
+
       },
     }
 
