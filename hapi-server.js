@@ -402,7 +402,7 @@ async function init() {
       },
     },
 
-
+// for commit
     //UPDATES A RIDE
     {
       method: "PATCH",
