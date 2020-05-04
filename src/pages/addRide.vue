@@ -35,8 +35,8 @@
 
 
             <v-select label="Select vehicle type" :items="vehicleTypes" v-model="vehicleId"></v-select>
-            <v-select label="Select from location" :items="fromLocation" v-model="fromLocationId"></v-select>
-            <v-select label="Select to location" :items="fromLocation" v-model="toLocationId"></v-select>
+            <v-select label="Select from location" :items="Locations" v-model="fromLocationId"></v-select>
+            <v-select label="Select to location" :items="Locations" v-model="toLocationId"></v-select>
 
 
 
@@ -73,8 +73,7 @@
                 toLocationId: "",
 
                 vehicleTypes: [],
-                fromLocation: [],
-                toLocation: [],
+                Locations: [],
 
                 snackbar: {
                     show: false,
@@ -111,7 +110,7 @@
             this.$axios
                 .get("/location")
                 .then(result => {
-                    this.fromLocation = result.data.map(location => ({
+                    this.Locations = result.data.map(location => ({
                         text: location.id,
                         value: location.id
                     }));
