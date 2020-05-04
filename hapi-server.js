@@ -515,12 +515,12 @@ async function init() {
         if (authorize) {
           return {
             ok: true,
-            msge: `Created ride `,
+            msge: `Driver Authorized`,
           };
         } else {
           return {
             ok: false,
-            msge: `Couldn't create ride `,
+            msge: `Could not authorize `,
           };
         }
 

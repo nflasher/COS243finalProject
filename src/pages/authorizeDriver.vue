@@ -52,9 +52,9 @@
             this.$axios
                 .get("/vehicle")
                 .then(result => {
-                    this.vehicle = result.data.map(vehicleType => ({
-                        text: vehicleType.licenseNumber,
-                        value: vehicleType.id
+                    this.vehicle = result.data.map(vehicle => ({
+                        text: vehicle.licenseNumber,
+                        value: vehicle.id
                     }));
                 });
         },
@@ -63,9 +63,9 @@
             this.$axios
                 .get("/driver")
                 .then(result => {
-                    this.driver = result.data.map(location => ({
-                        text: location.firstName,
-                        value: location.id
+                    this.driver = result.data.map(driver => ({
+                        text: driver.firstName,
+                        value: driver.id
                     }));
                 });
         },
@@ -74,8 +74,9 @@
             authorizeDriver() {
                 this.$axios
                     .post("/authorization", {
-                        vehicleId: this.vehicleId,
                         driverId: this.driverId,
+                        vehicleId: this.vehicleId,
+
                     })
                     .then((result) => {
                         this.showSnackbar(result.data.msge);
