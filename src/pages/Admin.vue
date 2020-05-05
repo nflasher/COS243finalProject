@@ -1,31 +1,46 @@
 <template>
+    <v-container fluid class="pa-0">
+    <v-row align="center">
+        <v-col cols="12" sm="6">
+
+
     <div class="my-2">
-        <header>
-            Admin Page
-        </header>
-        <v-btn text v-bind:to="{ name: 'addVehicle' }">
+        <h2 class="h2-responsive"><strong>Admin page</strong></h2>
+        <div class="my-2">
+        <v-btn outlined v-bind:to="{ name: 'addVehicle' }">
             Add Vehicle
         </v-btn>
-        <v-btn text v-bind:to="{ name: 'updateVehicle' }">
+        <v-btn outlined v-bind:to="{ name: 'updateVehicle' }">
         Update Vehicle
         </v-btn>
-        <v-btn text v-bind:to="{ name: 'addVehicleType' }">
+        </div>
+        <div class="my-2">
+        <v-btn outlined v-bind:to="{ name: 'addVehicleType' }">
             Add Vehicle Type
         </v-btn>
-        <v-btn text v-bind:to="{ name: 'addRide' }">
+        </div>
+        <div class="my-2">
+        <v-btn outlined v-bind:to="{ name: 'addRide' }">
             Add Ride
         </v-btn>
-        <v-btn text v-bind:to="{ name: 'updateRide' }">
+        <v-btn outlined v-bind:to="{ name: 'updateRide' }">
             Update Ride
         </v-btn>
-        <v-btn text v-bind:to="{ name: 'authorizeDriver' }">
+        </div>
+        <div class="my-2">
+        <v-btn outlined v-bind:to="{ name: 'authorizeDriver' }">
             Authorize Driver
         </v-btn>
-        <v-btn text v-bind:to="{ name: 'getReport' }">
+        </div>
+        <div class="my-2">
+        <v-btn outlined v-bind:to="{ name: 'getReport' }">
             Get report of all rides with their passengers and drivers
         </v-btn>
+        </div>
     </div>
-
+            </v-col>
+        </v-row>
+        </v-container>
 </template>
 
 <script>

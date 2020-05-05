@@ -3,7 +3,12 @@
         <header>Update a vehicle here.</header>
         <v-form v-model="valid">
 
-            <v-select label="Select vehicle id" :items="vehicleIds" v-model="id"></v-select>
+            <v-select
+                    label="Select vehicle id"
+                    :items="vehicleIds"
+                    v-model="id"
+                    :rules="rules.validId"
+            ></v-select>
 
             <v-text-field
                     v-model="make"
@@ -49,7 +54,12 @@
             </v-text-field>
 
 
-            <v-select label="Select vehicle type" :items="vehicleTypes" v-model="vehicleTypeId"></v-select>
+            <v-select
+                    label="Select vehicle type"
+                    :items="vehicleTypes"
+                    v-model="vehicleTypeId"
+                    :rules="rules.validId"
+            ></v-select>
 
 
 
@@ -98,13 +108,14 @@
                 },
                 numbersOnly:[
                     (val) => /^[1-9]\d*(\.\d+)?$/.test(val) || 'Numerical values only'
-                ]
+                ],
+                validId: [(val) => val > 0 || "Invalid"],
             };
 
 
         },
 
-        mounted: function() {
+        created: function() {
             this.$axios
                 .get("/vehicleType")
                 .then(result => {
@@ -112,10 +123,18 @@
                         text: vehicleType.type,
                         value: vehicleType.id
                     }));
+                    // Add a choice to the beginning of the list. Give it an invalid
+                    // value (vehicle IDs assigned by Postgres won't ever be negative).
+                    this.vehicleTypes.unshift({
+                        text: "Choose Vehicle Type",
+                        value: -1,
+                    });
+                    // Set the v-model datum to show this choice by default.
+                    this.vehicleTypeId = -1;
                 });
         },
 
-        created: function() {
+        mounted: function() {
             this.$axios
                 .get("/vehicleId")
                 .then(result => {
@@ -123,6 +142,14 @@
                         text: vehicleId.id,
                         value: vehicleId.id
                     }));
+                    // Add a choice to the beginning of the list. Give it an invalid
+                    // value (vehicle IDs assigned by Postgres won't ever be negative).
+                    this.vehicleIds.unshift({
+                        text: "Choose Vehicle id",
+                        value: -1,
+                    });
+                    // Set the v-model datum to show this choice by default.
+                    this.id = -1;
                 });
         },
 

@@ -112,6 +112,15 @@
                         text: vehicleType.type,
                         value: vehicleType.id
                     }));
+
+                    // Add a choice to the beginning of the list. Give it an invalid
+                    // value (vehicle IDs assigned by Postgres won't ever be negative).
+                    this.vehicleTypes.unshift({
+                        text: "Choose vehicle type",
+                        value: -1,
+                    });
+                    // Set the v-model datum to show this choice by default.
+                    this.vehicleId = -1;
                 });
         },
 
@@ -123,6 +132,16 @@
                         text: location.address,
                         value: location.id
                     }));
+
+                    // Add a choice to the beginning of the list. Give it an invalid
+                    // value (vehicle IDs assigned by Postgres won't ever be negative).
+                    this.Locations.unshift({
+                        text: "Choose location",
+                        value: -1,
+                    });
+                    // Set the v-model datum to show this choice by default.
+                    this.fromLocationId = -1;
+                    this.toLocationId = -1;
                 });
         },
 
@@ -134,6 +153,15 @@
                         text: rideId.id,
                         value: rideId.id
                     }));
+
+                    // Add a choice to the beginning of the list. Give it an invalid
+                    // value (vehicle IDs assigned by Postgres won't ever be negative).
+                    this.ids.unshift({
+                        text: "Choose ride id",
+                        value: -1,
+                    });
+                    // Set the v-model datum to show this choice by default.
+                    this.id = -1;
                 });
         },
 

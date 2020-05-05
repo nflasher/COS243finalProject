@@ -56,6 +56,14 @@
                         text: vehicle.licenseNumber,
                         value: vehicle.id
                     }));
+                    // Add a choice to the beginning of the list. Give it an invalid
+                    // value (vehicle IDs assigned by Postgres won't ever be negative).
+                    this.vehicle.unshift({
+                        text: "Choose license number",
+                        value: -1,
+                    });
+                    // Set the v-model datum to show this choice by default.
+                    this.vehicleId = -1;
                 });
         },
 
@@ -67,6 +75,14 @@
                         text: driver.firstName,
                         value: driver.id
                     }));
+                    // Add a choice to the beginning of the list. Give it an invalid
+                    // value (vehicle IDs assigned by Postgres won't ever be negative).
+                    this.driver.unshift({
+                        text: "Choose driver",
+                        value: -1,
+                    });
+                    // Set the v-model datum to show this choice by default.
+                    this.driverId = -1;
                 });
         },
 
