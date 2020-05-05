@@ -58,7 +58,7 @@
         },
 
         mounted: function() {
-            this.$axios.get("/getReport").then(response => {
+            this.$axios.get("/report").then(response => {
                 this.rideInfo = response.data.map(rideInformation => ({
                     id: rideInformation.id,
                     date: rideInformation.date,

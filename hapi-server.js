@@ -530,7 +530,7 @@ async function init() {
 //GET RIDE REPORT
     {
       method: "GET",
-      path: "/getReport",
+      path: "/report",
       config: {
         description: "Get report of rides",
       },
