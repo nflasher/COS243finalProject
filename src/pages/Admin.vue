@@ -1,11 +1,7 @@
 <template>
-    <v-container fluid class="pa-0">
-    <v-row align="center">
-        <v-col cols="12" sm="6">
-
 
     <div class="my-2">
-        <h2 class="h2-responsive"><strong>Admin page</strong></h2>
+        <h2 class="h2 text-center blue--text"><strong>Admin page</strong></h2>
         <div class="my-2">
         <v-btn outlined v-bind:to="{ name: 'addVehicle' }">
             Add Vehicle
@@ -38,9 +34,6 @@
         </v-btn>
         </div>
     </div>
-            </v-col>
-        </v-row>
-        </v-container>
 </template>
 
 <script>
