@@ -10,6 +10,7 @@
         >
             <template v-slot:item="{ item }">
                 <tr v-bind:class="itemClass(item)">
+                    <td>{{ item.id }}</td>
                     <td>{{ item.date }}</td>
                     <td>{{ item.time }}</td>
                     <td>{{ item.distance }}</td>
@@ -52,6 +53,7 @@
             return {
                 valid: false, // Are all the fields in the form valid?
                 headers: [
+                    { text: "Ride id", value: "id" },
                     { text: "Date", value: "date" },
                     { text: "Time", value: "time" },
                     { text: "Distance", value: "distance" },
@@ -90,39 +92,58 @@
 
         mounted: function() {
             this.$axios
-                .get("/ride")
+                .get("/report")
                 .then(result => {
-                    this.vehicle = result.data.map(vehicle => ({
-                        text: vehicle.licenseNumber,
-                        value: vehicle.id
+                    this.rides = result.data.map(ride => ({
+                        text: ride.id,
+                        value: ride.id
                     }));
                     // Add a choice to the beginning of the list. Give it an invalid
                     // value (vehicle IDs assigned by Postgres won't ever be negative).
-                    this.vehicle.unshift({
-                        text: "Choose license number",
+                    this.rides.unshift({
+                        text: "Choose ride id of your ride",
                         value: -1,
                     });
                     // Set the v-model datum to show this choice by default.
-                    this.vehicleId = -1;
+                    this.rideId = -1;
                 });
+        },
+
+        beforeMount: function() {
+            this.$axios.get("/report").then(response => {
+                this.rideInfo = response.data.map(rideInformation => ({
+                    id: rideInformation.id,
+                    date: rideInformation.date,
+                    time: rideInformation.time,
+                    distance: rideInformation.distance,
+                    fuelPrice: rideInformation.fuelPrice,
+                    fee: rideInformation.fee,
+                    vehicleId: rideInformation.vehicleId,
+                    fromLocationId: rideInformation.fromLocationId,
+                    toLocationId: rideInformation.toLocationId,
+                    passengers: rideInformation.passenger.firstName,
+                    drivers: rideInformation.driver.firstName
+
+                }));
+            });
         },
 
         created: function() {
             this.$axios
-                .get("/driver")
+                .get("/passenger")
                 .then(result => {
-                    this.driver = result.data.map(driver => ({
-                        text: driver.firstName,
-                        value: driver.id
+                    this.passengers = result.data.map(passenger => ({
+                        text: passenger.firstName,
+                        value: passenger.id
                     }));
                     // Add a choice to the beginning of the list. Give it an invalid
                     // value (vehicle IDs assigned by Postgres won't ever be negative).
-                    this.driver.unshift({
-                        text: "Choose driver",
+                    this.passengers.unshift({
+                        text: "Choose your name",
                         value: -1,
                     });
                     // Set the v-model datum to show this choice by default.
-                    this.driverId = -1;
+                    this.passengerId = -1;
                 });
         },
 
@@ -137,7 +158,7 @@
 
             signUp() {
                 this.$axios
-                    .post("/passenger", {
+                    .post("/passengers", {
                         passengerId: this.passengerId,
                         rideId: this.rideId,
 

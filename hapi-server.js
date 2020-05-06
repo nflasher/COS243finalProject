@@ -23,6 +23,7 @@ const Location = require("./models/location");
 const Driver = require("./models/driver");
 const Authorization = require("./models/authorization");
 const Passenger = require("./models/passenger");
+const Passengers = require("./models/passengers");
 
 
 
@@ -541,9 +542,9 @@ async function init() {
 
     {
       method: "POST",
-      path: "/passenger",
+      path: "/passengers",
       config: {
-        description: "Creates passenger for rude",
+        description: "Creates passenger for ride",
         validate: {
           payload: Joi.object({
             passengerId: Joi.number().required(),
@@ -552,7 +553,7 @@ async function init() {
         },
       },
       handler: async (request, h) => {
-        const existingAuth = await Passenger.query()
+        const existingAuth = await Passengers.query()
             .where("passengerId", request.payload.passengerId)
             .where("rideId", request.payload.rideId)
             .first();
@@ -562,7 +563,7 @@ async function init() {
             msge: `Ride with '${request.payload.passengerId}' and '${request.payload.rideId}' is already registered`,
           };
         }
-        const authorize = await Authorization.query().insert({
+        const authorize = await Passengers.query().insert({
           passengerId: request.payload.passengerId,
           rideId: request.payload.rideId,
         });
@@ -598,7 +599,22 @@ async function init() {
 
       },
 
-    }
+    },
+
+    //GET ALL PASSENGERS
+    {
+      method: "GET",
+      path: "/passenger",
+      config: {
+        description: "Get all passengers",
+      },
+      handler: async (request, h) => {
+        return Passenger.query()
+
+
+      },
+
+    },
 
 
 
