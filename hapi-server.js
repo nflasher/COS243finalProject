@@ -507,7 +507,7 @@ async function init() {
         },
       },
       handler: async (request, h) => {
-
+        //saladman 4
         const existingAuth = await Authorization.query()
             .where("driverId", request.payload.driverId)
             .where("vehicleId", request.payload.vehicleId)
