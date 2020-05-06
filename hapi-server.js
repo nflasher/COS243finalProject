@@ -536,14 +536,6 @@ async function init() {
       },
       handler: async (request, h) => {
         return Ride.query()
-            .select('date')
-            .select('time')
-            .select('distance')
-            .select('fuelPrice')
-            .select('fee')
-            .select('vehicleId')
-            .select('fromLocationId')
-            .select('toLocationId')
 
       },
 
