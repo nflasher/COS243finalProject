@@ -538,6 +538,50 @@ async function init() {
       },
 
     },
+
+    {
+      method: "POST",
+      path: "/passenger",
+      config: {
+        description: "Creates passenger for rude",
+        validate: {
+          payload: Joi.object({
+            passengerId: Joi.number().required(),
+            rideId: Joi.number().required()
+          }),
+        },
+      },
+      handler: async (request, h) => {
+        const existingAuth = await Passenger.query()
+            .where("passengerId", request.payload.passengerId)
+            .where("rideId", request.payload.rideId)
+            .first();
+        if (existingAuth) {
+          return {
+            ok: false,
+            msge: `Ride with '${request.payload.passengerId}' and '${request.payload.rideId}' is already registered`,
+          };
+        }
+        const authorize = await Authorization.query().insert({
+          passengerId: request.payload.passengerId,
+          rideId: request.payload.rideId,
+        });
+
+        if (authorize) {
+          return {
+            ok: true,
+            msge: `Signed up successfully`,
+          };
+        } else {
+          return {
+            ok: false,
+            msge: `Failed`,
+          };
+        }
+
+      },
+
+    },
 //GET RIDE REPORT
     {
       method: "GET",
@@ -555,6 +599,8 @@ async function init() {
       },
 
     }
+
+
 
 
 

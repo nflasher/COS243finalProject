@@ -1,6 +1,29 @@
 <template>
     <div>
         <header>Sign up for a ride</header>
+        <h4 class="display-1">Rides</h4>
+
+        <v-data-table
+                class="elevation-1"
+                v-bind:headers="headers"
+                v-bind:items="rideInfo"
+        >
+            <template v-slot:item="{ item }">
+                <tr v-bind:class="itemClass(item)">
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.time }}</td>
+                    <td>{{ item.distance }}</td>
+                    <td>{{ item.fuelPrice }}</td>
+                    <td>{{ item.fee }}</td>
+                    <td>{{ item.vehicleId }}</td>
+                    <td>{{ item.fromLocationId }}</td>
+                    <td>{{ item.toLocationId }}</td>
+                    <td>{{ item.passengers }}</td>
+                    <td>{{ item.drivers }}</td>
+
+                </tr>
+            </template>
+        </v-data-table>
         <v-form v-model="valid">
 
             <v-select label="Select who you are (just you) (ONLY YOU)" :items="passengers" v-model="passengerId"></v-select>
@@ -9,9 +32,12 @@
             <v-spacer></v-spacer>
 
             <v-btn v-bind:disabled="!valid" v-on:click="signUp"
-            >Authorize driver
+            >Sign up
             </v-btn>
         </v-form>
+
+
+
         <v-snackbar v-model="snackbar.show">
             {{ snackbar.msge }}
             <v-btn text color="primary" @click="snackbar.show = false">Close</v-btn>
@@ -25,8 +51,22 @@
         data() {
             return {
                 valid: false, // Are all the fields in the form valid?
+                headers: [
+                    { text: "Date", value: "date" },
+                    { text: "Time", value: "time" },
+                    { text: "Distance", value: "distance" },
+                    { text: "Fuel Price", value: "fuelPrice" },
+                    { text: "Fee", value: "fee" },
+                    { text: "Vehicle type", value: "vehicleId" },
+                    { text: "From Location", value: "fromLocationId" },
+                    { text: "To Location", value: "toLocationId" },
+                    { text: "Passengers", value: "passengers" },
+                    { text: "Driver", value: "drivers" }
+                ],
+                rideInfo: [],
 
                 rideId:"",
+
                 passengerId: "",
 
                 rides: [],
@@ -87,11 +127,19 @@
         },
 
         methods: {
+
+            itemClass(item) {
+                const currentAccount = this.$store.state.currentAccount;
+                if (currentAccount && currentAccount.id === item.id) {
+                    return "currentAccount";
+                }
+            },
+
             signUp() {
                 this.$axios
-                    .post("/authorization", {
-                        driverId: this.driverId,
-                        vehicleId: this.vehicleId,
+                    .post("/passenger", {
+                        passengerId: this.passengerId,
+                        rideId: this.rideId,
 
                     })
                     .then((result) => {

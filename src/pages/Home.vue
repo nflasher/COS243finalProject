@@ -7,9 +7,17 @@
     </div>
 
     <div>
-      <v-btn v-if="isLoggedIn" text v-bind:to="{ name: 'admin' }">
+      <v-btn outlined v-if="isLoggedIn" text v-bind:to="{ name: 'admin' }">
         Admin
       </v-btn>
+
+      <div>
+
+      <v-btn outlined v-if="isLoggedIn" text v-bind:to="{ name: 'passenger' }">
+        Passenger
+      </v-btn>
+
+      </div>
 
     </div>
   </v-container>
