@@ -535,7 +535,15 @@ async function init() {
         description: "Get report of rides",
       },
       handler: async (request, h) => {
-        return Ride.query();
+        return Ride.query()
+            .select('date')
+            .select('time')
+            .select('distance')
+            .select('fuelPrice')
+            .select('fee')
+            .select('vehicleId')
+            .select('fromLocationId')
+            .select('toLocationId')
 
       },
 

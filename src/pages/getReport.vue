@@ -60,7 +60,6 @@
         mounted: function() {
             this.$axios.get("/report").then(response => {
                 this.rideInfo = response.data.map(rideInformation => ({
-                    id: rideInformation.id,
                     date: rideInformation.date,
                     time: rideInformation.time,
                     distance: rideInformation.distance,
@@ -79,6 +78,13 @@
             showSnackbar(text) {
                 this.snackbar.text = text;
                 this.snackbar.show = true;
+            },
+
+            itemClass(item) {
+                const currentAccount = this.$store.state.currentAccount;
+                if (currentAccount && currentAccount.id === item.id) {
+                    return "currentAccount";
+                }
             },
 
         }
