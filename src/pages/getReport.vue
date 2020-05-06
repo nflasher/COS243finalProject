@@ -18,6 +18,8 @@
                         <td>{{ item.vehicleId }}</td>
                         <td>{{ item.fromLocationId }}</td>
                         <td>{{ item.toLocationId }}</td>
+                        <td>{{ item.passengers }}</td>
+                        <td>{{ item.drivers }}</td>
 
                     </tr>
                 </template>
@@ -48,7 +50,7 @@
                     { text: "From Location", value: "fromLocationId" },
                     { text: "To Location", value: "toLocationId" },
                     { text: "Passengers", value: "passengers" },
-                    { text: "Driver", value: "driver" }
+                    { text: "Driver", value: "drivers" }
                 ],
                 rideInfo: [],
 
@@ -71,7 +73,7 @@
                     fromLocationId: rideInformation.fromLocationId,
                     toLocationId: rideInformation.toLocationId,
                     passengers: rideInformation.passengers,
-                    driver: rideInformation.driver
+                    drivers: rideInformation.drivers
 
                 }));
             });
