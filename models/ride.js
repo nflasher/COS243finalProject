@@ -6,7 +6,7 @@ class Ride extends Model { //DONE
     }
 
     static get relationMappings() {
-        return {
+        return {/*
             drivers: {
                 relation: Model.HasManyRelation,
                 modelClass: __dirname + "/drivers",
@@ -14,15 +14,43 @@ class Ride extends Model { //DONE
                     from: 'ride.id',
                     to: 'drivers.rideId'
                 }
+            }, */
+
+            driver: {
+                relation: Model.ManyToManyRelation,
+
+                modelClass: __dirname + "/driver",
+                join: {
+                    from: 'ride.id',
+                    through: {
+                        from: 'drivers.rideId',
+                        to: 'drivers.driverId',
+                    },
+                    to: 'driver.id'
+                }
             },
-            passengers: {
+          /*  passengers: {
                 relation: Model.HasManyRelation,
                 modelClass: __dirname + "/passengers",
                 join: {
                     from: 'ride.id',
                     to: 'passengers.rideId'
                 }
-            },
+            }, */
+
+          passenger: {
+            relation: Model.ManyToManyRelation,
+
+            modelClass: __dirname + '/passenger',
+              join: {
+                from: 'ride.id',
+                through: {
+                    from: 'passengers.rideId',
+                    to: 'passengers.passengerId'
+                  },
+                  to: 'passenger.id'
+              }
+          },
 
             vehicle: {
                 relation: Model.BelongsToOneRelation,

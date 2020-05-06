@@ -6,7 +6,7 @@ class Passenger extends Model { //DONE
     }
     static get relationMappings() {
         return {
-            passengers: {
+           /* passengers: {
                 relation: Model.HasManyRelation,
                 modelClass: __dirname + "/passengers",
                 join: {
@@ -14,8 +14,22 @@ class Passenger extends Model { //DONE
                     to: 'passengers.passengerId'  }
             }
 
-        }
+        } */
 
+           ride: {
+               relation: Model.ManyToManyRelation,
+
+               modelClass: __dirname + '/ride',
+               join: {
+                   from: 'passenger.id',
+                   through: {
+                       from: 'passengers.passengerId',
+                       to: 'passengers.rideId'
+                   },
+                   to: 'ride.id'
+               }
+           }
+        }
     }
 }
 

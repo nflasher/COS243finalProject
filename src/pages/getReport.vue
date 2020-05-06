@@ -72,8 +72,8 @@
                     vehicleId: rideInformation.vehicleId,
                     fromLocationId: rideInformation.fromLocationId,
                     toLocationId: rideInformation.toLocationId,
-                    passengers: rideInformation.passengers,
-                    drivers: rideInformation.drivers
+                    passengers: rideInformation.passenger.firstName,
+                    drivers: rideInformation.driver.firstName
 
                 }));
             });

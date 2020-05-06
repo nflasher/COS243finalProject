@@ -22,6 +22,7 @@ const Ride = require("./models/ride");
 const Location = require("./models/location");
 const Driver = require("./models/driver");
 const Authorization = require("./models/authorization");
+const Passenger = require("./models/passenger");
 
 
 
@@ -545,10 +546,11 @@ async function init() {
         description: "Get report of rides",
       },
       handler: async (request, h) => {
-        //salad man
+
         return Ride.query()
-            .withGraphFetched('passengers')
-            .withGraphFetched('drivers');
+            .withGraphFetched('passenger')
+            .withGraphFetched('driver')
+
 
       },
 
