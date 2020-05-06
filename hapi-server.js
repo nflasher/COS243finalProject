@@ -546,6 +546,7 @@ async function init() {
         description: "Get report of rides",
       },
       handler: async (request, h) => {
+        //salad man
         return Ride.query()
             .withGraphFetched('passengers')
             .withGraphFetched('drivers');
