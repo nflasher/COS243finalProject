@@ -82,8 +82,8 @@ async function init() {
           last_name: request.payload.lastName,
           email: request.payload.email,
           password: request.payload.password,
-        });
 
+      });
         if (newAccount) {
           return {
             ok: true,
@@ -507,6 +507,17 @@ async function init() {
         },
       },
       handler: async (request, h) => {
+
+        const existingAuth = await Authorization.query()
+            .where("driverId", request.payload.driverId)
+            .where("vehicleId", request.payload.vehicleId)
+            .first();
+        if (existingAuth) {
+          return {
+            ok: false,
+            msge: `Account with '${request.payload.driverId}' and '${request.payload.vehicleId}' is already authorized`,
+          };
+        }
         const authorize = await Authorization.query().insert({
           driverId: request.payload.driverId,
           vehicleId: request.payload.vehicleId,
