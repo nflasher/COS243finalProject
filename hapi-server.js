@@ -536,6 +536,8 @@ async function init() {
       },
       handler: async (request, h) => {
         return Ride.query()
+            .withGraphFetched('passengers')
+            .withGraphFetched('drivers');
 
       },
 

@@ -46,7 +46,9 @@
                     { text: "Fee", value: "fee" },
                     { text: "Vehicle type", value: "vehicleId" },
                     { text: "From Location", value: "fromLocationId" },
-                    { text: "To Location", value: "toLocationId" }
+                    { text: "To Location", value: "toLocationId" },
+                    { text: "Passengers", value: "passengers" },
+                    { text: "Driver", value: "driver" }
                 ],
                 rideInfo: [],
 
@@ -67,7 +69,9 @@
                     fee: rideInformation.fee,
                     vehicleId: rideInformation.vehicleId,
                     fromLocationId: rideInformation.fromLocationId,
-                    toLocationId: rideInformation.toLocationId
+                    toLocationId: rideInformation.toLocationId,
+                    passengers: rideInformation.passengers,
+                    driver: rideInformation.driver
 
                 }));
             });
