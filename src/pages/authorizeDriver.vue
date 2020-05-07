@@ -12,10 +12,26 @@
             >Authorize driver
             </v-btn>
         </v-form>
-        <v-snackbar v-model="snackbar.show">
-            {{ snackbar.msge }}
-            <v-btn text color="primary" @click="snackbar.show = false">Close</v-btn>
-        </v-snackbar>
+        <div class="text-xs-center">
+            <v-dialog v-model="dialogVisible" width="500">
+                <v-card>
+                    <v-card-title primary-title>
+                        {{ dialogHeader }}
+                    </v-card-title>
+
+                    <v-card-text>
+                        {{ dialogText }}
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" text v-on:click="hideDialog">Okay</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+        </div>
     </div>
 </template>
 
@@ -25,6 +41,10 @@
         data() {
             return {
                 valid: false, // Are all the fields in the form valid?
+
+                dialogHeader: "<no dialogHeader>",
+                dialogText: "<no dialogText>",
+                dialogVisible: false,
 
                 vehicleId:"",
                 driverId: "",
@@ -95,17 +115,26 @@
 
                     })
                     .then((result) => {
-                        this.showSnackbar(result.data.msge);
+                        this.showDialog(result.data.msge);
                         if (result.data.ok) {
-                            this.showSnackbar("Success", result.data.msge);
+                            this.showDialog("Success", result.data.msge);
                         }
                         else{
-                            this.showSnackbar("Failure", result.data.msge);
+                            this.showDialog("Failure", result.data.msge);
                         }
                     })
-                    .catch((err) => this.showSnackbar(err));
+                    .catch((err) => this.showDialog(err));
             },
 
+            showDialog: function (header, text) {
+                this.dialogHeader = header;
+                this.dialogText = text;
+                this.dialogVisible = true;
+            },
+
+            hideDialog: function () {
+                this.dialogVisible = false;
+            },
 
 
             showSnackbar(msge) {

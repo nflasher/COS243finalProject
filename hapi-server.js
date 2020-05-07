@@ -513,12 +513,14 @@ async function init() {
             .where("driverId", request.payload.driverId)
             .where("vehicleId", request.payload.vehicleId)
             .first();
+
         if (existingAuth) {
           return {
             ok: false,
             msge: `Account with '${request.payload.driverId}' and '${request.payload.vehicleId}' is already authorized`,
           };
         }
+
         const authorize = await Authorization.query().insert({
           driverId: request.payload.driverId,
           vehicleId: request.payload.vehicleId,
@@ -560,7 +562,7 @@ async function init() {
         if (existingAuth) {
           return {
             ok: false,
-            msge: `Ride with '${request.payload.passengerId}' and '${request.payload.rideId}' is already registered`,
+            msge: `You're already registered for that ride`,
           };
         }
         const authorize = await Passengers.query().insert({
@@ -614,7 +616,7 @@ async function init() {
 
       },
 
-    },
+    }
 
 
 
