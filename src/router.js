@@ -20,6 +20,8 @@ import seeRides from "./pages/seeRides";
 import Driver from "./pages/Driver";
 import registerToDrive from "./pages/registerToDrive";
 import signUpPassenger from "./pages/signUpPassenger";
+import signUpDriver from "./pages/signUpDriver";
+
 
 
 
@@ -48,6 +50,8 @@ export default new Router({
     { name: "seeRides", path: "/passenger/seeRides", component: seeRides },
     { name: "registerToDrive", path: "/driver/registerToDrive", component: registerToDrive },
     { name: "signUpPassenger", path: "/passenger/signUpPassenger", component: signUpPassenger },
+    { name: "signUpDriver", path: "/passenger/signUpDriver", component: signUpDriver },
+
 
 
   ]

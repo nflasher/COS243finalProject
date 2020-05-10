@@ -730,6 +730,44 @@ async function init() {
 
         },
 
+        {
+            method: "POST",
+            path: "/driver",
+            config: {
+                description: "Add driver",
+                validate: {
+                    payload: Joi.object({
+                        firstName: Joi.string().required(),
+                        lastName: Joi.string().required(),
+                        phone: Joi.number().required(),
+                        licenseNumber: Joi.string().required()
+                    }),
+                },
+            },
+            handler: async (request, h) => {
+                const addDriver = await Driver.query().insert({
+                    firstName: request.payload.firstName,
+                    lastName: request.payload.lastName,
+                    phone: request.payload.phone,
+                    licenseNumber: request.payload.licenseNumber,
+
+                });
+
+                if (addDriver) {
+                    return {
+                        ok: true,
+                        msge: `Added Driver `,
+                    };
+                } else {
+                    return {
+                        ok: false,
+                        msge: `Couldn't add Driver `,
+                    };
+                }
+
+            },
+
+        },
 
     ]);
 
