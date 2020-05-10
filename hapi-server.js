@@ -544,7 +544,7 @@ async function init() {
             method: "POST",
             path: "/passengers",
             config: {
-                description: "Creates passenger for ride",
+                description: "Assigns passenger for ride",
                 validate: {
                     payload: Joi.object({
                         passengerId: Joi.number().required(),
@@ -614,7 +614,39 @@ async function init() {
 
             },
 
-        }
+        },
+
+
+        //GET RIDES FOR ONE PASSENGER NOOOOOT DONEEE
+        {
+            method: "GET",
+            path: "/rides",
+            config: {
+                description: "Get rides for one passenger",
+            },
+            handler: async (request, h) => {
+                return Ride.query()
+
+
+            },
+
+        },
+
+
+        //GET ALL DRIVERS
+        {
+            method: "GET",
+            path: "/driver",
+            config: {
+                description: "Get all drivers",
+            },
+            handler: async (request, h) => {
+                return Driver.query()
+
+
+            },
+
+        },
 
 
     ]);

@@ -17,6 +17,13 @@
         Passenger
       </v-btn>
 
+<div>
+        <v-btn outlined v-if="isLoggedIn" text v-bind:to="{ name: 'driver' }">
+          Driver
+        </v-btn>
+
+</div>
+
       </div>
 
     </div>

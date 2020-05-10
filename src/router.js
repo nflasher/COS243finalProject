@@ -15,8 +15,10 @@ import addRide from "./pages/addRide";
 import updateRide from "./pages/updateRide";
 import authorizeDriver from "./pages/authorizeDriver";
 import getReport from "./pages/getReport";
-import signUpRide from "./pages/signUpRide";
+import registerRide from "./pages/registerRide";
 import seeRides from "./pages/seeRides";
+import Driver from "./pages/Driver";
+import registerToDrive from "./pages/registerToDrive";
 
 
 
@@ -33,6 +35,7 @@ export default new Router({
     { name: "accounts", path: "/accounts", component: Accounts },
     { name: "admin", path: "/admin", component: Admin },
     { name: "passenger", path: "/passenger", component: Passenger },
+    { name: "driver", path: "/driver", component: Driver },
     { name: "addVehicle", path: "/admin/addVehicle", component: addVehicle },
     { name: "updateVehicle", path: "/admin/updateVehicle", component: updateVehicle },
     { name: "addVehicleType", path: "/admin/addVehicleType", component: addVehicleType },
@@ -40,8 +43,9 @@ export default new Router({
     { name: "updateRide", path: "/admin/updateRide", component: updateRide },
     { name: "authorizeDriver", path: "/admin/authorizeDriver", component: authorizeDriver },
     { name: "getReport", path: "/admin/getReport", component: getReport },
-    { name: "signUpRide", path: "/passenger/signUpRide", component: signUpRide },
+    { name: "registerRide", path: "/passenger/registerRide", component: registerRide },
     { name: "seeRides", path: "/passenger/seeRides", component: seeRides },
+    { name: "registerToDrive", path: "/driver/registerToDrive", component: registerToDrive },
 
 
   ]

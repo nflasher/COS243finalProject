@@ -1,15 +1,15 @@
 <template>
 
     <div class="my-2">
-        <h2 class="h2 text-center blue--text"><strong>Passenger page</strong></h2>
+        <h2 class="h2 text-center blue--text"><strong>Driver page</strong></h2>
         <div class="my-2">
-            <v-btn outlined v-bind:to="{ name: 'registerRide' }">
-                Register for a ride
+            <v-btn outlined v-bind:to="{ name: 'registerToDrive' }">
+                Register to drive
             </v-btn>
         </div>
         <div class="my-2">
             <v-btn outlined v-bind:to="{ name: 'seeRides' }">
-                See all of your rides
+                See all of your drives
             </v-btn>
         </div>
 
