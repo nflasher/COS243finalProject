@@ -29,14 +29,6 @@ class Ride extends Model { //DONE
                     to: 'driver.id'
                 }
             },
-          /*  passengers: {
-                relation: Model.HasManyRelation,
-                modelClass: __dirname + "/passengers",
-                join: {
-                    from: 'ride.id',
-                    to: 'passengers.rideId'
-                }
-            }, */
 
           passenger: {
             relation: Model.ManyToManyRelation,

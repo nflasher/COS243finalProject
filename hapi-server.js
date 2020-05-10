@@ -636,7 +636,7 @@ async function init() {
         //GET ALL DRIVERS
         {
             method: "GET",
-            path: "/driver",
+            path: "/driverAll",
             config: {
                 description: "Get all drivers",
             },
@@ -647,6 +647,41 @@ async function init() {
             },
 
         },
+        {
+            method: "POST",
+            path: "/passenger",
+            config: {
+                description: "Add passenger",
+                validate: {
+                    payload: Joi.object({
+                        firstName: Joi.date().required(),
+                        lastName: Joi.string().required(),
+                        phone: Joi.number().required(),
+                    }),
+                },
+            },
+            handler: async (request, h) => {
+                const addPassenger = await Passenger.query().insert({
+                    firstName: request.payload.firstName,
+                    lastName: request.payload.lastName,
+                    phone: request.payload.phone
+                });
+
+                if (addPassenger) {
+                    return {
+                        ok: true,
+                        msge: `Added Passenger `,
+                    };
+                } else {
+                    return {
+                        ok: false,
+                        msge: `Couldn't add Passenger `,
+                    };
+                }
+
+            },
+
+        }
 
 
     ]);

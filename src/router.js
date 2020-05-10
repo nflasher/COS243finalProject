@@ -19,6 +19,7 @@ import registerRide from "./pages/registerRide";
 import seeRides from "./pages/seeRides";
 import Driver from "./pages/Driver";
 import registerToDrive from "./pages/registerToDrive";
+import signUpPassenger from "./pages/signUpPassenger";
 
 
 
@@ -46,6 +47,7 @@ export default new Router({
     { name: "registerRide", path: "/passenger/registerRide", component: registerRide },
     { name: "seeRides", path: "/passenger/seeRides", component: seeRides },
     { name: "registerToDrive", path: "/driver/registerToDrive", component: registerToDrive },
+    { name: "signUpPassenger", path: "/passenger/signUpPassenger", component: signUpPassenger },
 
 
   ]
