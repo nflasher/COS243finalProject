@@ -27,13 +27,13 @@
         </v-data-table>
         <v-form v-model="valid">
 
-            <v-select label="Select who you are (just you) (ONLY YOU)" :items="driver" v-model="passengerId"></v-select>
+            <v-select label="Select who you are (just you) (ONLY YOU)" :items="drivers" v-model="driverId"></v-select>
             <v-select label="Select ride" :items="rides" v-model="rideId"></v-select>
 
             <v-spacer></v-spacer>
 
-            <v-btn v-bind:disabled="!valid" v-on:click="signUp"
-            >Sign up
+            <v-btn v-bind:disabled="!valid" v-on:click="register"
+            >Register
             </v-btn>
         </v-form>
 
@@ -85,10 +85,10 @@
 
                 rideId:"",
 
-                passengerId: "",
+                driverId: "",
 
                 rides: [],
-                passengers: [],
+                drivers: [],
 
                 dialogHeader: "<no dialogHeader>",
                 dialogText: "<no dialogText>",
@@ -150,20 +150,20 @@
 
         created: function() {
             this.$axios
-                .get("/passenger")
+                .get("/driverAll")
                 .then(result => {
-                    this.passengers = result.data.map(passenger => ({
-                        text: passenger.firstName,
-                        value: passenger.id
+                    this.drivers = result.data.map(driver => ({
+                        text: driver.firstName,
+                        value: driver.id
                     }));
                     // Add a choice to the beginning of the list. Give it an invalid
                     // value (vehicle IDs assigned by Postgres won't ever be negative).
-                    this.passengers.unshift({
+                    this.drivers.unshift({
                         text: "Choose your name",
                         value: -1,
                     });
                     // Set the v-model datum to show this choice by default.
-                    this.passengerId = -1;
+                    this.driverId = -1;
                 });
         },
 
@@ -176,10 +176,10 @@
                 }
             },
 
-            signUp() {
+            register() {
                 this.$axios
-                    .post("/passengers", {
-                        passengerId: this.passengerId,
+                    .post("/drivers", {
+                        driverId: this.driverId,
                         rideId: this.rideId,
 
                     })

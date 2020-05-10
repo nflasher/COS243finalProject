@@ -24,6 +24,7 @@ const Driver = require("./models/driver");
 const Authorization = require("./models/authorization");
 const Passenger = require("./models/passenger");
 const Passengers = require("./models/passengers");
+const Drivers = require("./models/drivers");
 
 
 // Hapi
@@ -647,6 +648,7 @@ async function init() {
             },
 
         },
+
         {
             method: "POST",
             path: "/passenger",
@@ -681,7 +683,52 @@ async function init() {
 
             },
 
-        }
+        },
+
+        //POST TO DRIVERS
+        {
+            method: "POST",
+            path: "/drivers",
+            config: {
+                description: "Assigns driver to ride",
+                validate: {
+                    payload: Joi.object({
+                        driverId: Joi.number().required(),
+                        rideId: Joi.number().required()
+                    }),
+                },
+            },
+            handler: async (request, h) => {
+                const existingAuth = await Drivers.query()
+                    .where("driverId", request.payload.driverId)
+                    .where("rideId", request.payload.rideId)
+                    .first();
+                if (existingAuth) {
+                    return {
+                        ok: false,
+                        msge: `You're already registered to drive for that ride`,
+                    };
+                }
+                const authorize = await Drivers.query().insert({
+                    driverId: request.payload.driverId,
+                    rideId: request.payload.rideId,
+                });
+
+                if (authorize) {
+                    return {
+                        ok: true,
+                        msge: `Registered successfully`,
+                    };
+                } else {
+                    return {
+                        ok: false,
+                        msge: `Failed`,
+                    };
+                }
+
+            },
+
+        },
 
 
     ]);
