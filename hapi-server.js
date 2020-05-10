@@ -656,7 +656,7 @@ async function init() {
                 description: "Add passenger",
                 validate: {
                     payload: Joi.object({
-                        firstName: Joi.date().required(),
+                        firstName: Joi.string().required(),
                         lastName: Joi.string().required(),
                         phone: Joi.number().required(),
                     }),
