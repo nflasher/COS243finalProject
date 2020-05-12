@@ -11,7 +11,15 @@ class Driver extends Model {  //DONE
                 modelClass: __dirname + "/authorization",
                 join: {
                     from: 'driver.id',
-                    to: 'authorization.driverId' }
+                    to: 'vehicle.id' }
+            },
+
+            vehicle: {
+                relation: Model.HasManyRelation,
+                modelClass: __dirname + "/vehicle",
+                join: {
+                    from: 'driver.id',
+                    to: 'vehicle.id' }
             },
 
             /*drivers: {
