@@ -6,14 +6,28 @@ class Vehicle extends Model {
     }
     static get relationMappings() {
         return {
-            authorization: {
+          /*  authorization: {
                 relation: Model.HasManyRelation,
                 modelClass: __dirname + "/authorization",
                 join: {
                     from: 'vehicle.id',
                     to: 'authorization.vehicleId'
                 }
+            }, */
+            driver: {
+                relation: Model.ManyToManyRelation,
+
+                modelClass: __dirname + '/driver',
+                join: {
+                    from: 'vehicle.id',
+                    through: {
+                        from: 'authorization.vehicleId',
+                        to: 'authorization.driverId'
+                    },
+                    to: 'driver.id'
+                }
             },
+
             ride: {
                 relation: Model.HasManyRelation,
                 modelClass: __dirname + "/ride",
