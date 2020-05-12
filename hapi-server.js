@@ -557,44 +557,58 @@ async function init() {
             method: "POST",
             path: "/passengers",
             config: {
-                description: "Assigns passenger for ride",
+                description: "Assigns passenger to ride",
                 validate: {
                     payload: Joi.object({
-                        passengerId: Joi.number().required(),
-                        rideId: Joi.number().required()
+                        passengerId: Joi.number().integer().min(1).required(),
+                        rideId: Joi.number().integer().min(1).required(),
                     }),
                 },
             },
             handler: async (request, h) => {
-                const existingAuth = await Passengers.query()
-                    .where("passengerId", request.payload.passengerId)
-                    .where("rideId", request.payload.rideId)
-                    .first();
-                if (existingAuth) {
+                // Find the driver.
+                const passenger = await Passenger.query().findById(request.payload.passengerId);
+                if (!passenger) {
                     return {
                         ok: false,
-                        msge: `You're already registered for that ride`,
+                        msge: `No passenger with ID ${request.payload.passengerId}`,
                     };
                 }
-                const authorize = await Passengers.query().insert({
-                    passengerId: request.payload.passengerId,
-                    rideId: request.payload.rideId,
-                });
-
-                if (authorize) {
+                // Find the vehicle.
+                const ride = await Ride.query().findById(
+                    request.payload.rideId
+                );
+                if (!ride) {
+                    return {
+                        ok: false,
+                        msge: `No ride with ID ${request.payload.rideId}`,
+                    };
+                }
+                // Make sure the driver is not already authorized for the vehicle.
+                const existingPass = await passenger
+                    .$relatedQuery("ride")
+                    .where("id", ride.id)
+                    .first();
+                if (existingPass) {
+                    return {
+                        ok: false,
+                        msge: "Passenger already in ride",
+                    };
+                }
+                // Authorize the driver for the vehicle.
+                const affected = await passenger.$relatedQuery("ride").relate(ride);
+                if (affected === 1) {
                     return {
                         ok: true,
-                        msge: `Signed up successfully`,
+                        msge: "Passenger registered for ride",
                     };
                 } else {
                     return {
                         ok: false,
-                        msge: `Failed`,
+                        msge: "Couldn't register passenger for ride",
                     };
                 }
-
             },
-
         },
 //GET RIDE REPORT
         {
@@ -702,44 +716,58 @@ async function init() {
             method: "POST",
             path: "/drivers",
             config: {
-                description: "Assigns driver to ride",
+                description: "Register drive to ride",
                 validate: {
                     payload: Joi.object({
-                        driverId: Joi.number().required(),
-                        rideId: Joi.number().required()
+                        driverId: Joi.number().integer().min(1).required(),
+                        rideId: Joi.number().integer().min(1).required(),
                     }),
                 },
             },
             handler: async (request, h) => {
-                const existingAuth = await Drivers.query()
-                    .where("driverId", request.payload.driverId)
-                    .where("rideId", request.payload.rideId)
-                    .first();
-                if (existingAuth) {
+                // Find the driver.
+                const driver = await Driver.query().findById(request.payload.driverId);
+                if (!driver) {
                     return {
                         ok: false,
-                        msge: `You're already registered to drive for that ride`,
+                        msge: `No driver with ID ${request.payload.driverId}`,
                     };
                 }
-                const authorize = await Drivers.query().insert({
-                    driverId: request.payload.driverId,
-                    rideId: request.payload.rideId,
-                });
-
-                if (authorize) {
+                // Find the vehicle.
+                const ride = await Ride.query().findById(
+                    request.payload.rideId
+                );
+                if (!ride) {
+                    return {
+                        ok: false,
+                        msge: `No ride with ID ${request.payload.rideId}`,
+                    };
+                }
+                // Make sure the driver is not already authorized for the vehicle.
+                const existingDriv = await driver
+                    .$relatedQuery("ride")
+                    .where("id", ride.id)
+                    .first();
+                if (existingDriv) {
+                    return {
+                        ok: false,
+                        msge: "Driver already driving that ride",
+                    };
+                }
+                // Authorize the driver for the vehicle.
+                const affected = await driver.$relatedQuery("ride").relate(ride);
+                if (affected === 1) {
                     return {
                         ok: true,
-                        msge: `Registered successfully`,
+                        msge: "Driver successfully registered to drive that ride",
                     };
                 } else {
                     return {
                         ok: false,
-                        msge: `Failed`,
+                        msge: "Failed to register drive for that ride",
                     };
                 }
-
             },
-
         },
 
         {
